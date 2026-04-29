@@ -24,7 +24,7 @@ const CollegeCard = ({ college }: Props) => {
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2">
-        {college.courses.slice(0, 3).map((course) => (
+        {(JSON.parse(college.courses) as string[]).slice(0, 3).map((course) => (
           <span key={course} className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-700">
             {course}
           </span>
