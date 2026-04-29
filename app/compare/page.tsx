@@ -27,6 +27,14 @@ export default function ComparePage() {
 
   const selectedColleges = colleges.filter((college) => selected.includes(college.slug));
 
+  const compareRows: [string, (college: College) => React.ReactNode][] = [
+    ['Location', (college) => college.location],
+    ['Fees', (college) => `₹${college.fees.toLocaleString()}`],
+    ['Rating', (college) => college.rating.toFixed(1)],
+    ['Placement', (college) => `${college.placementRate}%`],
+    ['Top courses', (college) => college.courses.slice(0, 3).join(', ')],
+  ];
+
   return (
     <main className="mx-auto min-h-screen max-w-6xl px-6 py-10 sm:px-8">
       <div className="space-y-6 rounded-[2rem] border border-slate-200 bg-white p-8 shadow-card">
@@ -85,18 +93,12 @@ export default function ComparePage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {[
-                    ['Location', (college: College) => college.location],
-                    ['Fees', (college: College) => `₹${college.fees.toLocaleString()}`],
-                    ['Rating', (college: College) => college.rating.toFixed(1)],
-                    ['Placement', (college: College) => `${college.placementRate}%`],
-                    ['Top courses', (college: College) => college.courses.slice(0, 3).join(', ')],
-                  ].map(([label, value]) => (
+                  {compareRows.map(([label, value]) => (
                     <tr key={label}>
                       <td className="border-b border-slate-200 px-4 py-3 font-medium text-slate-700">{label}</td>
                       {selectedColleges.map((college) => (
                         <td key={`${college.slug}-${label}`} className="border-b border-slate-200 px-4 py-3 text-slate-600">
-                          {value(college as College)}
+                          {value(college)}
                         </td>
                       ))}
                     </tr>
